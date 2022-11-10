@@ -17,10 +17,18 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let input = getfile(&args.input);
-    println!("{}", input);
+    // parse the swaps
+    let mut input = getfile(&args.input);
     let swaps = getfile(&args.swaps);
-    println!("{}", swaps);
+    for s in swaps.lines() {
+        let parts = s.split_whitespace().collect::<Vec<&str>>();
+        if parts.len() == 2 {
+            let from = parts[0];
+            let to = parts[1];
+            input = input.replace(from, to);
+        }
+    }
+    print!("{}", input);
 }
 
 fn getfile(p: &str) -> String {
